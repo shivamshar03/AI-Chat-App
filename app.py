@@ -1,32 +1,22 @@
 import streamlit as st
-import google.generativeai as genai
+from langchain_groq import ChatGroq
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Configure Gemini
-genai.configure(api_key="YOUR_API_KEY")  # Replace with your actual key
-
-# Initialize Gemini model
-model = genai.GenerativeModel("gemini-1.5-pro-latest")
+# genai.configure(api_key="AIzaSyBGjYQIUiv5IBR6r51FvcDPaEnjN9M65Rg")
+# Function to return the response
+def load_answer(question):
+    llm = ChatGroq(model_name="llama3-8b-8192")
+    answer = llm.invoke(question)
+    return answer.text
 
 # Streamlit UI
-st.set_page_config(page_title="Gemini Chatbot", page_icon=":robot:")
-st.header("Hey, I'm your Gemini Assistant")
+st.set_page_config(page_title="LangChain Demo", page_icon= ":robot:")
+st.header("LangChain Demo")
 
-if "sessionMessages" not in st.session_state:
-    st.session_state.sessionMessages = []
-
-def load_answer(question):
-    st.session_state.sessionMessages.append({"role": "user", "parts": [question]})
-
-    response = model.generate_content(st.session_state.sessionMessages)
-
-    st.session_state.sessionMessages.append({"role": "model", "parts": [response.text]})
-
-    return response.text
-
-def get_text():
-    return st.text_input("You:")
-
-user_input = get_text()
+user_input = st.text_input("You: ")
 
 if st.button("Generate") and user_input:
     with st.spinner("Generating answer..."):
