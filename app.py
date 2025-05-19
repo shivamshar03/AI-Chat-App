@@ -10,7 +10,7 @@ load_dotenv()
 def load_answer(question):
     llm = ChatGroq(model_name="llama3-8b-8192")
     answer = llm.invoke(question)
-    return answer.text
+    return answer.content
 
 # Streamlit UI
 st.set_page_config(page_title="LangChain Demo", page_icon= ":robot:")
