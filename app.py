@@ -13,7 +13,7 @@ def load_answer(question):
     return answer.content
 
 # Streamlit UI
-st.set_page_config(page_title="LangChain Demo", page_icon= ":robot:")
+st.set_page_config(page_title="AI Chat Bot", page_icon= ":robot:")
 st.header("LangChain Demo")
 
 user_input = st.text_input("You: ")
